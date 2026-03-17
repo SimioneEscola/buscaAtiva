@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Painel de Busca Ativa — Escola Luiz Simioni Sobrinho Professor</title>
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: system-ui, -apple-system, sans-serif; background: #f5f4ef; color: #1a1a18; padding: 20px 12px; font-size: 13px; }
+.page { max-width: 1200px; margin: 0 auto; }
+h1 { font-size: 19px; font-weight: 500; margin-bottom: 2px; }
+.subtitulo { font-size: 12px; color: #5f5e5a; margin-bottom: 16px; }
+.top-bar { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; margin-bottom: 14px; padding-bottom: 12px; border-bottom: 0.5px solid #d3d1c7; }
+.filtros { display: flex; gap: 6px; flex-wrap: wrap; flex: 1; }
+.btn-f { font-size: 11px; padding: 4px 11px; border-radius: 20px; border: 0.5px solid #b4b2a9; background: transparent; color: #5f5e5a; cursor: pointer; transition: all .15s; }
+.btn-f:hover { background: #ebebea; }
+.btn-f.at-todos  { background:#E24B4A; border-color:#E24B4A; color:#fff; }
+.btn-f.at-fund   { background:#185FA5; border-color:#185FA5; color:#fff; }
+.btn-f.at-medio  { background:#A32D2D; border-color:#A32D2D; color:#fff; }
+.btn-f.at-tec    { background:#712B13; border-color:#712B13; color:#fff; }
+.busca { font-size: 12px; padding: 4px 9px; border-radius: 7px; border: 0.5px solid #b4b2a9; background: #fff; color: #1a1a18; width: 180px; }
+.btn-exp { font-size: 11px; padding: 4px 11px; border-radius: 7px; border: 0.5px solid #b4b2a9; background: #fff; color: #5f5e5a; cursor: pointer; }
+.btn-exp:hover { background: #ebebea; }
+.resumo { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 14px; }
+.rc { background: #ebebea; border-radius: 8px; padding: 7px 12px; font-size: 11px; color: #5f5e5a; flex: 1; min-width: 90px; text-align: center; }
+.rc span { font-size: 20px; font-weight: 500; display: block; color: #1a1a18; }
+.rc span.red { color: #E24B4A; }
+.legenda-status { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 12px; font-size: 11px; color: #5f5e5a; }
+.leg { display: flex; align-items: center; gap: 4px; }
+.leg-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
+.total-vis { font-size: 11px; color: #5f5e5a; margin-bottom: 6px; }
+.tabela-wrap { overflow-x: auto; }
+table { width: 100%; border-collapse: collapse; font-size: 11px; background: #fff; border-radius: 10px; overflow: hidden; border: 0.5px solid #d3d1c7; min-width: 1100px; }
+th { text-align: left; padding: 7px 8px; font-weight: 500; font-size: 10px; color: #5f5e5a; border-bottom: 0.5px solid #d3d1c7; white-space: nowrap; cursor: pointer; user-select: none; background: #f5f4ef; }
+th.no-sort { cursor: default; }
+th:not(.no-sort):hover { color: #1a1a18; }
+td { padding: 6px 8px; border-bottom: 0.5px solid #d3d1c7; color: #1a1a18; vertical-align: middle; }
+tr:last-child td { border-bottom: none; }
+tr:hover td { background: #faf9f6; }
+.turma-pill { font-size: 10px; font-weight: 500; padding: 2px 6px; border-radius: 10px; white-space: nowrap; }
+.pill-fund  { background: #E6F1FB; color: #0C447C; }
+.pill-medio { background: #FCEBEB; color: #791F1F; }
+.pill-tec   { background: #FAECE7; color: #712B13; }
+.bar-bg2 { background: #d3d1c7; border-radius: 3px; height: 5px; overflow: hidden; width: 60px; }
+.bar-in { height: 5px; border-radius: 3px; background: #E24B4A; }
+.motivo-cel { color: #5f5e5a; font-size: 10px; max-width: 160px; line-height: 1.4; }
+select.sel-status, select.sel-enc { font-size: 10px; padding: 3px 5px; border-radius: 6px; border: 0.5px solid #b4b2a9; background: #fff; color: #1a1a18; cursor: pointer; width: 100%; min-width: 130px; }
+select.sel-status { min-width: 148px; }
+select.sel-enc { min-width: 130px; }
+input.inp-data { font-size: 10px; padding: 3px 5px; border-radius: 6px; border: 0.5px solid #b4b2a9; background: #fff; color: #1a1a18; width: 100px; }
+input.inp-obs { font-size: 10px; padding: 3px 5px; border-radius: 6px; border: 0.5px solid #b4b2a9; background: #fff; color: #1a1a18; width: 130px; }
+.status-dot { display: inline-block; width: 8px; height: 8px; border-radius: 50%; margin-right: 4px; vertical-align: middle; flex-shrink: 0; }
+.s-row-pendente  td:first-child { border-left: 3px solid #d3d1c7; }
+.s-row-ncom      td:first-child { border-left: 3px solid #E24B4A; }
+.s-row-contato   td:first-child { border-left: 3px solid #EF9F27; }
+.s-row-notif1    td:first-child { border-left: 3px solid #BA7517; }
+.s-row-notif2    td:first-child { border-left: 3px solid #854F0B; }
+.s-row-notif3    td:first-child { border-left: 3px solid #412402; }
+.s-row-transfer  td:first-child { border-left: 3px solid #185FA5; }
+.s-row-baixa     td:first-child { border-left: 3px solid #3B6D11; }
+.sort-ico { margin-left: 2px; font-size: 9px; }
+.nenhum { text-align: center; padding: 28px; color: #5f5e5a; font-size: 12px; }
+.rodape { font-size: 10px; color: #888780; margin-top: 20px; text-align: center; }
+@media print {
+  body { background: #fff; padding: 10px; }
+  .top-bar, .btn-exp { display: none; }
+  select, input { border: 0.5px solid #ccc; }
+}
+</style>
+</head>
+<body>
+<div class="page">
+  <h1>Painel de Busca Ativa — Alunos Críticos</h1>
+  <div class="subtitulo">Escola Luiz Simioni Sobrinho Professor · Diretoria Sul 1 · Língua Portuguesa · Fevereiro e março/2026</div>
+
+  <div class="top-bar">
+    <div class="filtros">
+      <button class="btn-f at-todos" id="btn-todos"  onclick="setSeg('todos',this)">Todos</button>
+      <button class="btn-f"          id="btn-fund"   onclick="setSeg('fund',this)">Fundamental</button>
+      <button class="btn-f"          id="btn-medio"  onclick="setSeg('medio',this)">Ens. Médio</button>
+      <button class="btn-f"          id="btn-tec"    onclick="setSeg('tec',this)">Técnico</button>
+      <button class="btn-f"          id="btn-pend"   onclick="setSeg('pendente',this)">Sem ação</button>
+    </div>
+    <input class="busca" type="text" placeholder="Buscar aluno ou turma..." oninput="render()">
+    <button class="btn-exp" onclick="window.print()">Imprimir</button>
+  </div>
+
+  <div class="resumo">
+    <div class="rc"><span class="red" id="cnt-total">0</span>total críticos</div>
+    <div class="rc"><span id="cnt-fund" style="color:#185FA5">0</span>fundamental</div>
+    <div class="rc"><span id="cnt-medio" style="color:#A32D2D">0</span>ens. médio</div>
+    <div class="rc"><span id="cnt-tec" style="color:#712B13">0</span>técnico</div>
+    <div class="rc"><span id="cnt-pend" style="color:#E24B4A">0</span>sem ação</div>
+    <div class="rc"><span id="cnt-em" style="color:#BA7517">0</span>em andamento</div>
+    <div class="rc"><span id="cnt-enc" style="color:#3B6D11">0</span>encerrados</div>
+  </div>
+
+  <div class="legenda-status">
+    <span style="font-weight:500;margin-right:2px">Status:</span>
+    <span class="leg"><span class="leg-dot" style="background:#d3d1c7"></span>Pendente</span>
+    <span class="leg"><span class="leg-dot" style="background:#E24B4A"></span>NCOM</span>
+    <span class="leg"><span class="leg-dot" style="background:#EF9F27"></span>Contato realizado</span>
+    <span class="leg"><span class="leg-dot" style="background:#BA7517"></span>1ª notificação</span>
+    <span class="leg"><span class="leg-dot" style="background:#854F0B"></span>2ª notificação</span>
+    <span class="leg"><span class="leg-dot" style="background:#412402"></span>3ª notificação</span>
+    <span class="leg"><span class="leg-dot" style="background:#185FA5"></span>Transferência</span>
+    <span class="leg"><span class="leg-dot" style="background:#3B6D11"></span>Baixa transferência</span>
+  </div>
+
+  <div class="total-vis" id="total-vis"></div>
+
+  <div class="tabela-wrap">
+    <table id="tabela">
+      <thead>
+        <tr>
+          <th onclick="sortBy('nome')">Aluno <span class="sort-ico" id="s-nome"></span></th>
+          <th onclick="sortBy('turma')">Turma <span class="sort-ico" id="s-turma"></span></th>
+          <th onclick="sortBy('fev')">Fev <span class="sort-ico" id="s-fev"></span></th>
+          <th onclick="sortBy('mar')">Mar <span class="sort-ico" id="s-mar"></span></th>
+          <th onclick="sortBy('total')">Total <span class="sort-ico" id="s-total"></span></th>
+          <th>Grav.</th>
+          <th>Alerta</th>
+          <th class="no-sort">Status</th>
+          <th class="no-sort">Encaminhamento</th>
+          <th class="no-sort">Data</th>
+          <th class="no-sort">Observações</th>
+        </tr>
+      </thead>
+      <tbody id="tbody"></tbody>
+    </table>
+  </div>
+
+  <div class="rodape">Gerado em 17/03/2026 · Escola Luiz Simioni Sobrinho Professor · Diretoria Sul 1 &nbsp;|&nbsp; Atualizado em tempo real — use Imprimir para registrar o estado atual.</div>
+</div>
+
+<script>
+const STATUS_OPTS = [
+  {val:"pendente",  label:"— Pendente —",            cor:"#d3d1c7", grupo:"pendente"},
+  {val:"ncom",      label:"NCOM — Não comparecimento",cor:"#E24B4A", grupo:"em"},
+  {val:"contato",   label:"Contato realizado",         cor:"#EF9F27", grupo:"em"},
+  {val:"notif1",    label:"1ª notificação",             cor:"#BA7517", grupo:"em"},
+  {val:"notif2",    label:"2ª notificação",             cor:"#854F0B", grupo:"em"},
+  {val:"notif3",    label:"3ª notificação",             cor:"#412402", grupo:"em"},
+  {val:"transfer",  label:"Transferência",              cor:"#185FA5", grupo:"enc"},
+  {val:"baixa",     label:"Baixa transferência",        cor:"#3B6D11", grupo:"enc"},
+];
+
+const ENC_OPTS = [
+  {val:"",          label:"— Sem encaminhamento —"},
+  {val:"coord",     label:"Coordenação pedagógica"},
+  {val:"orient",    label:"Orientação educacional"},
+  {val:"psicologo", label:"Psicólogo escolar"},
+  {val:"assoc_pais",label:"Associação de pais"},
+  {val:"ct",        label:"Conselho Tutelar"},
+  {val:"creas",     label:"CREAS"},
+  {val:"cras",      label:"CRAS"},
+  {val:"saude",     label:"Unidade de saúde"},
+  {val:"assistsoc", label:"Assistência social"},
+  {val:"mp",        label:"Ministério Público"},
+  {val:"rede",      label:"Rede protetiva (geral)"},
+  {val:"multiplo",  label:"Múltiplos encaminhamentos"},
+];
+
+const dados = [
+  {id:0,  nome:"Julia Motta Dias Alves do Carmo",             turma:"Adm 2ºA", seg:"tec",   fev:32, mar:71, motivo:"103 faltas — maior de toda a escola. Urgente."},
+  {id:1,  nome:"Ana Julia Silva Marques",                      turma:"1ºD",     seg:"medio", fev:37, mar:60, motivo:"97 faltas. Maior do Médio."},
+  {id:2,  nome:"Jó Antonio Alves da Silva Santos",             turma:"1ºD",     seg:"medio", fev:35, mar:53, motivo:"88 faltas no bimestre."},
+  {id:3,  nome:"Laís Alves de Andrade",                        turma:"1ºD",     seg:"medio", fev:36, mar:42, motivo:"78 faltas no bimestre."},
+  {id:4,  nome:"Ana Carollyne Santana de Farias",              turma:"1ºB",     seg:"medio", fev:27, mar:51, motivo:"78 faltas no bimestre."},
+  {id:5,  nome:"Miguel Farias de Deus",                        turma:"1ºB",     seg:"medio", fev:29, mar:49, motivo:"78 faltas no bimestre."},
+  {id:6,  nome:"Valentina Lira dos Santos Ferreira",           turma:"1ºB",     seg:"medio", fev:24, mar:49, motivo:"73 faltas. Alta desde fev."},
+  {id:7,  nome:"Gabriel Marques dos Santos",                   turma:"1ºA",     seg:"medio", fev:23, mar:64, motivo:"87 faltas. Piora intensa em março."},
+  {id:8,  nome:"Luiz Gustavo Lima Rodrigues",                  turma:"1ºA",     seg:"medio", fev:20, mar:53, motivo:"73 faltas no bimestre."},
+  {id:9,  nome:"Yago Pereira da Silva",                        turma:"2ºC",     seg:"medio", fev:37, mar:34, motivo:"71 faltas. Sem melhora."},
+  {id:10, nome:"Gabriel Vincre Vieira de Souza",               turma:"1ºA",     seg:"medio", fev:11, mar:52, motivo:"63 faltas. Crescimento de 5x em março."},
+  {id:11, nome:"Greta Borelli Taraio",                         turma:"1ºD",     seg:"medio", fev:32, mar:34, motivo:"66 faltas. Padrão crônico."},
+  {id:12, nome:"Vinicius Gross Comin Magalhães",               turma:"DS 2ºB",  seg:"tec",   fev:17, mar:40, motivo:"57 faltas. Explosão em março."},
+  {id:13, nome:"Pedro Henrique Freitas Dias",                  turma:"DS 2ºB",  seg:"tec",   fev:20, mar:35, motivo:"55 faltas. Crescimento expressivo."},
+  {id:14, nome:"Yan Kenji Horibe Gomes",                       turma:"DS 2ºB",  seg:"tec",   fev:30, mar:25, motivo:"55 faltas. Alto desde fev."},
+  {id:15, nome:"Davi José Lima Santos",                        turma:"9ºA",     seg:"fund",  fev:0,  mar:51, motivo:"51 faltas em março. Maior do Fund. 9º ano."},
+  {id:16, nome:"Michael Marrek Magalhães",                     turma:"1ºA",     seg:"medio", fev:15, mar:36, motivo:"51 faltas no bimestre."},
+  {id:17, nome:"Pâmela Lima Esteves",                          turma:"1ºD",     seg:"medio", fev:26, mar:21, motivo:"47 faltas. Sem melhora."},
+  {id:18, nome:"Gabriel Moisés Campos de Sousa",               turma:"DS 2ºB",  seg:"tec",   fev:21, mar:26, motivo:"47 faltas. Padrão crônico."},
+  {id:19, nome:"Iran Vitoriano Tavares",                       turma:"1ºC",     seg:"medio", fev:14, mar:39, motivo:"53 faltas. Piora forte em março."},
+  {id:20, nome:"Enrico Rodrigues Di Cicco Sanchez",            turma:"1ºB",     seg:"medio", fev:6,  mar:43, motivo:"49 faltas. Explosão em março."},
+  {id:21, nome:"Davi Brunno de Souza Pereira",                 turma:"1ºD",     seg:"medio", fev:34, mar:15, motivo:"49 faltas. Melhora em março — confirmar."},
+  {id:22, nome:"Luigi Damasceno de Oliveira",                  turma:"3ºH",     seg:"medio", fev:16, mar:25, motivo:"41 faltas. 3º ano — risco de não concluir."},
+  {id:23, nome:"Daniela Rodrigues dos Santos",                 turma:"2ºC",     seg:"medio", fev:43, mar:0,  motivo:"43 faltas em fev. Não consta em março."},
+  {id:24, nome:"Allyson de Souza Lima",                        turma:"2ºC",     seg:"medio", fev:40, mar:0,  motivo:"40 faltas em fev. Não consta em março."},
+  {id:25, nome:"Emanuelly Vitória Nascimento Vieira",          turma:"8ºC",     seg:"fund",  fev:0,  mar:41, motivo:"41 faltas em março após fev perfeito."},
+  {id:26, nome:"Agatha Cassimiro de Andrade",                  turma:"8ºB",     seg:"fund",  fev:0,  mar:40, motivo:"40 faltas. Investigar com Emilly Cassimiro."},
+  {id:27, nome:"Antonio Donha Teixeira Alquezar",              turma:"1ºD",     seg:"medio", fev:37, mar:0,  motivo:"37 faltas em fev. Não consta em março."},
+  {id:28, nome:"Gabriel Ferreira da Silva",                    turma:"1ºD",     seg:"medio", fev:37, mar:6,  motivo:"43 faltas. Melhora em março — confirmar."},
+  {id:29, nome:"Otávio Antonio Freire Osório",                 turma:"DS 2ºB",  seg:"tec",   fev:9,  mar:26, motivo:"35 faltas. Quase triplicou em março."},
+  {id:30, nome:"Murilo Guerra Camacho",                        turma:"8ºB",     seg:"fund",  fev:0,  mar:36, motivo:"36 faltas em março após fev perfeito."},
+  {id:31, nome:"Victor Gabriel de Castro Souza",               turma:"9ºA",     seg:"fund",  fev:0,  mar:36, motivo:"36 faltas em março. 9º ano."},
+  {id:32, nome:"Francisco Daniel Lima Santos",                 turma:"7ºA",     seg:"fund",  fev:0,  mar:38, motivo:"38 faltas em março. Maior do 7ºA."},
+  {id:33, nome:"Luan de Oliveira Lima",                        turma:"3ºH",     seg:"medio", fev:13, mar:23, motivo:"36 faltas. 3º ano — risco de não concluir."},
+  {id:34, nome:"Emilly Cassimiro de Andrade",                  turma:"8ºB",     seg:"fund",  fev:0,  mar:33, motivo:"33 faltas. Investigar com Agatha Cassimiro."},
+  {id:35, nome:"Sabrina Maysa Marcolino Vieira",               turma:"3ºH",     seg:"medio", fev:16, mar:17, motivo:"33 faltas. 3º ano — padrão crônico."},
+  {id:36, nome:"Vitor Coccinello",                             turma:"1ºD",     seg:"medio", fev:33, mar:0,  motivo:"33 faltas em fev. Não consta em março."},
+  {id:37, nome:"Maria Clara Oliveira Costa",                   turma:"Adm 2ºA", seg:"tec",   fev:14, mar:20, motivo:"34 faltas. Tendência crescente."},
+  {id:38, nome:"Michael Cruz dos Santos",                      turma:"Adm 2ºA", seg:"tec",   fev:28, mar:5,  motivo:"33 faltas. Melhora em março — confirmar."},
+  {id:39, nome:"Luiz Fernando Araujo Melo",                    turma:"1ºC",     seg:"medio", fev:32, mar:0,  motivo:"32 faltas em fev. Não consta em março."},
+  {id:40, nome:"Ricardo Silva dos Anjos",                      turma:"1ºC",     seg:"medio", fev:32, mar:0,  motivo:"32 faltas em fev. Não consta em março."},
+  {id:41, nome:"Yasmim Marinho Mota",                          turma:"8ºB",     seg:"fund",  fev:0,  mar:31, motivo:"31 faltas em março após fev perfeito."},
+  {id:42, nome:"Marcela Silva Leite",                          turma:"9ºA",     seg:"fund",  fev:0,  mar:29, motivo:"29 faltas em março. 9º ano."},
+  {id:43, nome:"Bruno Venâncio Pires",                         turma:"DS 2ºB",  seg:"tec",   fev:22, mar:7,  motivo:"29 faltas. Melhora em março — confirmar."},
+  {id:44, nome:"Geovanna Santana Barbosa",                     turma:"8ºB",     seg:"fund",  fev:0,  mar:28, motivo:"28 faltas em março."},
+  {id:45, nome:"Giovanna Soares de Souza",                     turma:"1ºA",     seg:"medio", fev:2,  mar:26, motivo:"Explosão em março (2→26)."},
+  {id:46, nome:"Maressa Lissa Moreira dos Santos",             turma:"1ºA",     seg:"medio", fev:3,  mar:27, motivo:"Explosão em março (3→27)."},
+  {id:47, nome:"Laryssa do Nascimento Gomes",                  turma:"1ºA",     seg:"medio", fev:1,  mar:27, motivo:"Explosão em março (1→27)."},
+  {id:48, nome:"Luis Felipe Dantas Medeiro Ferreira",          turma:"7ºB",     seg:"fund",  fev:0,  mar:27, motivo:"27 faltas em março após fev perfeito."},
+  {id:49, nome:"Sarah Lourdes Pereira Alves",                  turma:"8ºB",     seg:"fund",  fev:0,  mar:25, motivo:"25 faltas em março."},
+  {id:50, nome:"Luan Martins Pereira",                         turma:"7ºB",     seg:"fund",  fev:0,  mar:26, motivo:"26 faltas em março."},
+  {id:51, nome:"Julio César de Abreu Ramos",                   turma:"8ºA",     seg:"fund",  fev:0,  mar:24, motivo:"24 faltas em março."},
+  {id:52, nome:"Maria Luiza de Castro Freitas",                turma:"3ºH",     seg:"medio", fev:23, mar:0,  motivo:"23 faltas em fev. Não consta em março. 3º ano."},
+  {id:53, nome:"Samuel Alves Gonzaga",                         turma:"7ºB",     seg:"fund",  fev:0,  mar:22, motivo:"22 faltas em março após fev perfeito."},
+  {id:54, nome:"Kevin Miguel dos Santos Freitas",              turma:"8ºB",     seg:"fund",  fev:0,  mar:22, motivo:"22 faltas em março."},
+  {id:55, nome:"Kaue Rafael Rodrigues de Menezes",             turma:"8ºC",     seg:"fund",  fev:0,  mar:20, motivo:"20 faltas em março."},
+  {id:56, nome:"Mariana Ferreira de Carvalho Papa",            turma:"9ºA",     seg:"fund",  fev:0,  mar:20, motivo:"20 faltas em março. 9º ano."},
+  {id:57, nome:"Isaac Gomes Barros Moreira",                   turma:"8ºA",     seg:"fund",  fev:0,  mar:20, motivo:"20 faltas em março."},
+  {id:58, nome:"Guilherme Ribeiro Lima Ismael",                turma:"7ºB",     seg:"fund",  fev:0,  mar:20, motivo:"20 faltas em março."},
+  {id:59, nome:"Renan Leonardo",                               turma:"8ºA",     seg:"fund",  fev:0,  mar:18, motivo:"18 faltas em março."},
+  {id:60, nome:"Théo Marinho Cubo",                            turma:"7ºA",     seg:"fund",  fev:0,  mar:18, motivo:"18 faltas em março após fev perfeito."},
+  {id:61, nome:"Vinicius Alves Freitas",                       turma:"1ºC",     seg:"medio", fev:10, mar:20, motivo:"30 faltas. Tendência crescente."},
+  {id:62, nome:"Leandro Nunes da Silva",                       turma:"1ºC",     seg:"medio", fev:17, mar:9,  motivo:"26 faltas. Leve melhora — monitorar."},
+  {id:63, nome:"Enzo Marinho Cubo",                            turma:"1ºC",     seg:"medio", fev:9,  mar:16, motivo:"25 faltas. Crescente."},
+];
+
+const state = {};
+dados.forEach(d => { state[d.id] = {status:"pendente", enc:"", data:"", obs:""}; });
+
+let segFiltro = 'todos';
+let sortCol = 'total';
+let sortDir = -1;
+
+function setSeg(seg, btn) {
+  segFiltro = seg;
+  document.querySelectorAll('.btn-f').forEach(b => b.className = 'btn-f');
+  btn.className = 'btn-f at-' + seg;
+  render();
+}
+
+function sortBy(col) {
+  if (sortCol === col) sortDir *= -1;
+  else { sortCol = col; sortDir = -1; }
+  render();
+}
+
+function statusGrupo(s) {
+  const o = STATUS_OPTS.find(x => x.val === s);
+  return o ? o.grupo : 'pendente';
+}
+
+function render() {
+  const busca = document.querySelector('.busca').value.toLowerCase();
+
+  let lista = dados.filter(d => {
+    const s = state[d.id].status;
+    if (segFiltro === 'pendente' && s !== 'pendente') return false;
+    if (segFiltro !== 'todos' && segFiltro !== 'pendente' && d.seg !== segFiltro) return false;
+    if (busca && !d.nome.toLowerCase().includes(busca) && !d.turma.toLowerCase().includes(busca)) return false;
+    return true;
+  });
+
+  lista.sort((a, b) => {
+    let va = sortCol === 'nome' ? a.nome : sortCol === 'turma' ? a.turma : sortCol === 'fev' ? a.fev : sortCol === 'mar' ? a.mar : (a.fev + a.mar);
+    let vb = sortCol === 'nome' ? b.nome : sortCol === 'turma' ? b.turma : sortCol === 'fev' ? b.fev : sortCol === 'mar' ? b.mar : (b.fev + b.mar);
+    if (typeof va === 'string') return sortDir * va.localeCompare(vb);
+    return sortDir * (va - vb);
+  });
+
+  const maxFaltas = Math.max(...dados.map(d => d.fev + d.mar));
+  const pend = dados.filter(d => state[d.id].status === 'pendente').length;
+  const em = dados.filter(d => ['ncom','contato','notif1','notif2','notif3'].includes(state[d.id].status)).length;
+  const enc = dados.filter(d => ['transfer','baixa'].includes(state[d.id].status)).length;
+
+  document.getElementById('cnt-total').textContent  = dados.length;
+  document.getElementById('cnt-fund').textContent   = dados.filter(d=>d.seg==='fund').length;
+  document.getElementById('cnt-medio').textContent  = dados.filter(d=>d.seg==='medio').length;
+  document.getElementById('cnt-tec').textContent    = dados.filter(d=>d.seg==='tec').length;
+  document.getElementById('cnt-pend').textContent   = pend;
+  document.getElementById('cnt-em').textContent     = em;
+  document.getElementById('cnt-enc').textContent    = enc;
+  document.getElementById('total-vis').textContent  = 'Exibindo ' + lista.length + ' de ' + dados.length + ' alunos críticos';
+
+  ['nome','turma','fev','mar','total'].forEach(c => {
+    const el = document.getElementById('s-'+c);
+    if (el) el.textContent = sortCol === c ? (sortDir === -1 ? '↓' : '↑') : '';
+  });
+
+  const tbody = document.getElementById('tbody');
+  if (lista.length === 0) {
+    tbody.innerHTML = '<tr><td colspan="11" class="nenhum">Nenhum aluno encontrado.</td></tr>';
+    return;
+  }
+
+  const statusOpts = STATUS_OPTS.map(o =>
+    `<option value="${o.val}">${o.label}</option>`
+  ).join('');
+
+  const encOpts = ENC_OPTS.map(o =>
+    `<option value="${o.val}">${o.label}</option>`
+  ).join('');
+
+  tbody.innerHTML = lista.map(d => {
+    const total = d.fev + d.mar;
+    const pct = Math.round((total / maxFaltas) * 100);
+    const pc = d.seg === 'fund' ? 'pill-fund' : d.seg === 'medio' ? 'pill-medio' : 'pill-tec';
+    const fc = d.fev >= 30 ? 'color:#E24B4A;font-weight:500' : d.fev >= 15 ? 'color:#BA7517' : d.fev === 0 ? 'color:#3B6D11' : '';
+    const mc = d.mar >= 30 ? 'color:#E24B4A;font-weight:500' : d.mar >= 15 ? 'color:#BA7517' : d.mar === 0 ? 'color:#3B6D11' : '';
+    const tc = total >= 50 ? 'color:#E24B4A;font-weight:500' : total >= 25 ? 'color:#BA7517;font-weight:500' : '';
+    const st = state[d.id];
+    const stObj = STATUS_OPTS.find(x => x.val === st.status) || STATUS_OPTS[0];
+    const rowClass = 's-row-' + st.status;
+
+    const selStatus = `<select class="sel-status" onchange="upd(${d.id},'status',this.value)">${STATUS_OPTS.map(o=>`<option value="${o.val}"${st.status===o.val?' selected':''}>${o.label}</option>`).join('')}</select>`;
+    const selEnc    = `<select class="sel-enc" onchange="upd(${d.id},'enc',this.value)">${ENC_OPTS.map(o=>`<option value="${o.val}"${st.enc===o.val?' selected':''}>${o.label}</option>`).join('')}</select>`;
+    const inpData   = `<input class="inp-data" type="date" value="${st.data}" onchange="upd(${d.id},'data',this.value)">`;
+    const inpObs    = `<input class="inp-obs" type="text" placeholder="Observações..." value="${st.obs}" oninput="upd(${d.id},'obs',this.value)">`;
+
+    return `<tr class="${rowClass}">
+      <td style="font-weight:500;white-space:nowrap"><span class="status-dot" style="background:${stObj.cor}"></span>${d.nome}</td>
+      <td><span class="turma-pill ${pc}">${d.turma}</span></td>
+      <td style="${fc}">${d.fev}</td>
+      <td style="${mc}">${d.mar}</td>
+      <td style="${tc}">${total}</td>
+      <td><div class="bar-bg2"><div class="bar-in" style="width:${pct}%"></div></div></td>
+      <td class="motivo-cel">${d.motivo}</td>
+      <td>${selStatus}</td>
+      <td>${selEnc}</td>
+      <td>${inpData}</td>
+      <td>${inpObs}</td>
+    </tr>`;
+  }).join('');
+}
+
+function upd(id, campo, val) {
+  state[id][campo] = val;
+  const stObj = STATUS_OPTS.find(x => x.val === state[id].status) || STATUS_OPTS[0];
+  const tr = document.querySelector(`[data-id="${id}"]`);
+  render();
+}
+
+render();
+</script>
+</div>
+</body>
+</html>
