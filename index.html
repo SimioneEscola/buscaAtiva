@@ -748,19 +748,15 @@ tbody tr:last-child td { border-bottom: none; }
       <div>
         <label>Série / Ano *</label>
         <div class="radio-grid" id="serieRadios">
-          <label class="radio-pill"><input type="radio" name="serie" value="1º Ano EF"> 1º Ano</label>
-          <label class="radio-pill"><input type="radio" name="serie" value="2º Ano EF"> 2º Ano</label>
-          <label class="radio-pill"><input type="radio" name="serie" value="3º Ano EF"> 3º Ano</label>
-          <label class="radio-pill"><input type="radio" name="serie" value="4º Ano EF"> 4º Ano</label>
-          <label class="radio-pill"><input type="radio" name="serie" value="5º Ano EF"> 5º Ano</label>
-          <label class="radio-pill"><input type="radio" name="serie" value="6º Ano EF"> 6º Ano</label>
-          <label class="radio-pill"><input type="radio" name="serie" value="7º Ano EF"> 7º Ano</label>
-          <label class="radio-pill"><input type="radio" name="serie" value="8º Ano EF"> 8º Ano</label>
-          <label class="radio-pill"><input type="radio" name="serie" value="9º Ano EF"> 9º Ano</label>
-          <label class="radio-pill" style="border-top:1px dashed var(--borda);padding-top:8px;margin-top:4px;width:100%;font-size:11px;color:var(--cinza-medio);pointer-events:none;background:none;border-left:none;border-right:none;border-bottom:none;border-radius:0"> — Ensino Médio —</label>
-          <label class="radio-pill"><input type="radio" name="serie" value="1ª Série EM"> 1ª EM</label>
-          <label class="radio-pill"><input type="radio" name="serie" value="2ª Série EM"> 2ª EM</label>
-          <label class="radio-pill"><input type="radio" name="serie" value="3ª Série EM"> 3ª EM</label>
+          <label class="radio-pill" style="width:100%;font-size:10px;color:var(--cinza-medio);pointer-events:none;background:none;border-color:transparent;padding:2px 0">── Anos Finais ──</label>
+          <label class="radio-pill"><input type="radio" name="serie" value="6º Ano"> 6º Ano</label>
+          <label class="radio-pill"><input type="radio" name="serie" value="7º Ano"> 7º Ano</label>
+          <label class="radio-pill"><input type="radio" name="serie" value="8º Ano"> 8º Ano</label>
+          <label class="radio-pill"><input type="radio" name="serie" value="9º Ano"> 9º Ano</label>
+          <label class="radio-pill" style="width:100%;font-size:10px;color:var(--cinza-medio);pointer-events:none;background:none;border-color:transparent;padding:2px 0">── Ensino Médio ──</label>
+          <label class="radio-pill"><input type="radio" name="serie" value="1º Ano"> 1º EM</label>
+          <label class="radio-pill"><input type="radio" name="serie" value="2º Ano"> 2º EM</label>
+          <label class="radio-pill"><input type="radio" name="serie" value="3º Ano"> 3º EM</label>
         </div>
       </div>
       <div>
@@ -769,12 +765,8 @@ tbody tr:last-child td { border-bottom: none; }
           <label class="radio-pill"><input type="radio" name="turma" value="A"> A</label>
           <label class="radio-pill"><input type="radio" name="turma" value="B"> B</label>
           <label class="radio-pill"><input type="radio" name="turma" value="C"> C</label>
-          <label class="radio-pill"><input type="radio" name="turma" value="D"> D</label>
-          <label class="radio-pill"><input type="radio" name="turma" value="E"> E</label>
-          <label class="radio-pill"><input type="radio" name="turma" value="F"> F</label>
           <label class="radio-pill"><input type="radio" name="turma" value="ADM"> ADM</label>
           <label class="radio-pill"><input type="radio" name="turma" value="DES"> DES</label>
-          <label class="radio-pill"><input type="radio" name="turma" value="H"> H</label>
         </div>
       </div>
     </div>
@@ -796,20 +788,7 @@ tbody tr:last-child td { border-bottom: none; }
       </div>
     </div>
 
-    <div class="grid-3" style="margin-top:14px">
-      <div>
-        <label>Nome do(a) Responsável</label>
-        <input type="text" id="nomeResponsavel" placeholder="Nome completo">
-      </div>
-      <div>
-        <label>Telefone do Responsável</label>
-        <input type="tel" id="telResponsavel" placeholder="(11) 99999-9999">
-      </div>
-      <div>
-        <label>Endereço Residencial</label>
-        <input type="text" id="enderecoAluno" placeholder="Rua, nº, Bairro">
-      </div>
-    </div>
+
 
     <div style="margin-top:16px; display:flex; gap:10px; justify-content:space-between">
       <button class="btn btn-secondary" onclick="goStep(1)">← Voltar</button>
@@ -968,17 +947,16 @@ tbody tr:last-child td { border-bottom: none; }
         <label>Série / Ano *</label>
         <select id="cad-serie">
           <option value="">Selecione...</option>
-          <optgroup label="── Ensino Fundamental ──">
-            <option value="1º Ano EF">1º Ano EF</option><option value="2º Ano EF">2º Ano EF</option>
-            <option value="3º Ano EF">3º Ano EF</option><option value="4º Ano EF">4º Ano EF</option>
-            <option value="5º Ano EF">5º Ano EF</option><option value="6º Ano EF">6º Ano EF</option>
-            <option value="7º Ano EF">7º Ano EF</option><option value="8º Ano EF">8º Ano EF</option>
-            <option value="9º Ano EF">9º Ano EF</option>
+          <optgroup label="── Anos Finais ──">
+            <option value="6º Ano A">6º Ano A</option><option value="6º Ano B">6º Ano B</option><option value="6º Ano C">6º Ano C</option>
+            <option value="7º Ano A">7º Ano A</option><option value="7º Ano B">7º Ano B</option>
+            <option value="8º Ano A">8º Ano A</option><option value="8º Ano B">8º Ano B</option><option value="8º Ano C">8º Ano C</option>
+            <option value="9º Ano A">9º Ano A</option><option value="9º Ano B">9º Ano B</option>
           </optgroup>
           <optgroup label="── Ensino Médio ──">
-            <option value="1ª Série EM">1ª Série EM</option>
-            <option value="2ª Série EM">2ª Série EM</option>
-            <option value="3ª Série EM">3ª Série EM</option>
+            <option value="1º Ano A">1º Ano A</option><option value="1º Ano B">1º Ano B</option><option value="1º Ano C">1º Ano C</option>
+            <option value="2º Ano C">2º Ano C</option><option value="2º Ano ADM">2º Ano ADM</option><option value="2º Ano DES">2º Ano DES</option>
+            <option value="3º Ano C">3º Ano C</option><option value="3º Ano ADM">3º Ano ADM</option><option value="3º Ano DES">3º Ano DES</option>
           </optgroup>
         </select>
       </div>
@@ -987,8 +965,7 @@ tbody tr:last-child td { border-bottom: none; }
         <select id="cad-turma">
           <option value="">Selecione...</option>
           <option value="A">A</option><option value="B">B</option><option value="C">C</option>
-          <option value="D">D</option><option value="E">E</option><option value="F">F</option>
-          <option value="ADM">ADM</option><option value="DES">DES</option><option value="H">H</option>
+          <option value="ADM">ADM</option><option value="DES">DES</option>
         </select>
       </div>
     </div>
@@ -1020,10 +997,13 @@ tbody tr:last-child td { border-bottom: none; }
       <input type="text" id="filtroHistorico" placeholder="🔍 Buscar por aluno ou servidor..." style="flex:1;min-width:200px" oninput="renderHistorico()">
       <select id="filtroSerie" onchange="renderHistorico()" style="width:150px">
         <option value="">Todas as séries</option>
-        <option>1º Ano EF</option><option>2º Ano EF</option><option>3º Ano EF</option>
-        <option>4º Ano EF</option><option>5º Ano EF</option><option>6º Ano EF</option>
-        <option>7º Ano EF</option><option>8º Ano EF</option><option>9º Ano EF</option>
-        <option>1ª Série EM</option><option>2ª Série EM</option><option>3ª Série EM</option>
+        <option>6º Ano A</option><option>6º Ano B</option><option>6º Ano C</option>
+        <option>7º Ano A</option><option>7º Ano B</option>
+        <option>8º Ano A</option><option>8º Ano B</option><option>8º Ano C</option>
+        <option>9º Ano A</option><option>9º Ano B</option>
+        <option>1º Ano A</option><option>1º Ano B</option><option>1º Ano C</option>
+        <option>2º Ano C</option><option>2º Ano ADM</option><option>2º Ano DES</option>
+        <option>3º Ano C</option><option>3º Ano ADM</option><option>3º Ano DES</option>
       </select>
       <select id="filtroRisco" onchange="renderHistorico()" style="width:150px">
         <option value="">Todos os níveis</option>
@@ -1437,50 +1417,45 @@ document.querySelectorAll('input[name="resultado"], input[name="etapa"]').forEac
 });
 
 function renderAlunoList(serie) {
-  const raw = alunosDB[serie] || [];
   const list = document.getElementById('alunoList');
   const turmaSel = document.querySelector('input[name="turma"]:checked');
   const busca = document.getElementById('buscarAluno').value.toLowerCase();
 
-  // Normalize: EM entries are objects, EF entries are strings
-  const alunos = raw.map(function(a) {
-    if (typeof a === 'object') return a;
-    const t = turmaSel ? turmaSel.value : 'A';
-    return { nome: a, turma: t, endereco: '' };
-  });
+  // Chaves do alunosDB: "6º Ano A", "6º Ano B", "1º Ano A", "2º Ano C", etc.
+  // Radio série value: "6º Ano", "1º Ano" etc.
+  // Monta lista de chaves a exibir
+  const sufixos = ['A','B','C','ADM','DES'];
+  let chaves;
+  if (turmaSel) {
+    const chaveExata = serie + ' ' + turmaSel.value;
+    chaves = alunosDB[chaveExata] ? [chaveExata]
+           : sufixos.map(s => serie + ' ' + s).filter(k => alunosDB[k]);
+  } else {
+    chaves = sufixos.map(s => serie + ' ' + s).filter(k => alunosDB[k]);
+  }
 
-  // Filter by turma if selected (only meaningful for EM which has real turmas)
-  let filtrados = alunos.filter(function(a) {
-    const matchBusca = !busca || a.nome.toLowerCase().includes(busca);
-    const matchTurma = !turmaSel || a.turma === turmaSel.value || typeof raw[0] === 'string';
-    return matchBusca && matchTurma;
-  });
-
-  if (filtrados.length === 0) {
-    list.innerHTML = '<div style="padding:20px;text-align:center;color:#888;font-size:13px">Nenhum aluno encontrado.</div>';
+  if (chaves.length === 0) {
+    list.innerHTML = '<div style="padding:20px;text-align:center;color:#888;font-size:13px">Nenhuma turma encontrada para esta série.</div>';
     return;
   }
 
-  // Group by turma for display
-  const grupos = {};
-  filtrados.forEach(function(a) {
-    if (!grupos[a.turma]) grupos[a.turma] = [];
-    grupos[a.turma].push(a);
-  });
-
   let html = '';
-  Object.keys(grupos).sort().forEach(function(t) {
-    if (Object.keys(grupos).length > 1) {
-      html += '<div style="padding:6px 14px;background:var(--cinza-claro);font-size:11px;font-weight:700;color:var(--cinza-medio);text-transform:uppercase;letter-spacing:0.06em;">Turma ' + t + ' (' + grupos[t].length + ')</div>';
-    }
-    grupos[t].forEach(function(a, i) {
-      html += '<div class="aluno-item" onclick="selecionarAlunoObj(' + JSON.stringify(a) + ')">'
-        + '<span>' + a.nome + '</span>'
-        + '<span style="font-size:11px;color:#888;background:var(--cinza-claro);padding:2px 8px;border-radius:10px">Turma ' + a.turma + '</span>'
+  chaves.forEach(function(chave) {
+    const nomes = alunosDB[chave] || [];
+    const filtrados = nomes.filter(n => !busca || n.toLowerCase().includes(busca));
+    if (!filtrados.length) return;
+    html += '<div style="padding:6px 14px;background:var(--cinza-claro);font-size:11px;font-weight:700;color:var(--cinza-medio);text-transform:uppercase;letter-spacing:0.06em;">'
+          + chave + ' — ' + filtrados.length + ' aluno(s)</div>';
+    filtrados.forEach(function(nome) {
+      const obj = { nome: nome, turma: chave };
+      html += '<div class="aluno-item" onclick="selecionarAlunoObj(' + JSON.stringify(obj) + ')">'
+        + '<span>' + nome + '</span>'
+        + '<span style="font-size:11px;color:#888;background:var(--cinza-claro);padding:2px 8px;border-radius:10px">' + chave + '</span>'
         + '</div>';
     });
   });
-  list.innerHTML = html;
+
+  list.innerHTML = html || '<div style="padding:20px;text-align:center;color:#888;font-size:13px">Nenhum aluno encontrado.</div>';
 }
 
 function filtrarAlunos() {
@@ -1489,23 +1464,13 @@ function filtrarAlunos() {
 }
 
 function selecionarAlunoObj(alunoObj) {
-  const serie = document.querySelector('input[name="serie"]:checked');
   alunoSelecionado = { nome: alunoObj.nome, turma: alunoObj.turma };
   document.getElementById('alunoSelecionadoInfo').style.display = 'block';
   document.getElementById('alunoSelecionadoNome').textContent = alunoObj.nome;
-  document.getElementById('alunoSelecionadoSerie').textContent = (serie ? serie.value : '') + ' — Turma ' + alunoObj.turma;
-  // Pre-fill address from DB if available
-  if (alunoObj.endereco) {
-    document.getElementById('enderecoAluno').value = alunoObj.endereco;
-  }
-  // Check for previous records
+  document.getElementById('alunoSelecionadoSerie').textContent = alunoObj.turma;
   const prev = registros.filter(function(r){ return r.aluno === alunoObj.nome; });
   if (prev.length > 0) {
-    const last = prev[prev.length - 1];
-    document.getElementById('nomeResponsavel').value = last.responsavel || '';
-    document.getElementById('telResponsavel').value = last.telResponsavel || '';
-    if (!alunoObj.endereco) document.getElementById('enderecoAluno').value = last.endereco || '';
-    notify('📋 ' + prev.length + ' registro(s) anterior(es) carregado(s).', 'info');
+    notify('📋 ' + prev.length + ' registro(s) anterior(es) encontrado(s).', 'info');
   }
 }
 
@@ -1569,9 +1534,7 @@ function buildResumo() {
       <div>
         <div class="card-title">Aluno</div>
         <p><strong>${alunoSelecionado ? alunoSelecionado.nome : '—'}</strong></p>
-        <p style="font-size:12px;color:#888">${serie ? serie.value : ''} — Turma ${alunoSelecionado ? alunoSelecionado.turma : ''}</p>
-        <p style="font-size:12px;color:#888">Responsável: ${document.getElementById('nomeResponsavel').value || '—'}</p>
-        <p style="font-size:12px;color:#888">Endereço: ${document.getElementById('enderecoAluno').value || '—'}</p>
+        <p style="font-size:12px;color:#888">${alunoSelecionado ? alunoSelecionado.turma : ''}</p>
       </div>
       <div>
         <div class="card-title">Frequência</div>
@@ -1630,9 +1593,9 @@ function salvarRegistro() {
     aluno: alunoSelecionado ? alunoSelecionado.nome : '',
     serie: serie ? serie.value : '',
     turma: alunoSelecionado ? alunoSelecionado.turma : '',
-    responsavel: document.getElementById('nomeResponsavel').value,
-    telResponsavel: document.getElementById('telResponsavel').value,
-    endereco: document.getElementById('enderecoAluno').value,
+    responsavel: '',
+    telResponsavel: '',
+    endereco: '',
     faltasBimestre: faltas,
     aulasBimestre: aulas,
     pctFaltas: pct,
